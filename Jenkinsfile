@@ -4,27 +4,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/react-selenium-test.git'
+                git 'https://github.com/FranklyBreezy/python-selenium-test.git'
             }
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
-            }
-        }
-        stage('Start App') {
-            steps {
-                script {
-                    // Start app in background
-                    sh 'nohup npm start &'
-                    // Give time to start
-                    sleep time: 15, unit: 'SECONDS'
-                }
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Run Selenium Tests') {
             steps {
-                sh 'npm run test-selenium'
+                sh 'pytest --maxfail=1 --disable-warnings -q'
             }
         }
     }
